@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join Beauty - Pricing Plans</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+        }
+        .plan-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .plan-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .accordion-header {
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        .accordion-header:hover {
+            background-color: #f1f5f9;
+        }
+        .accordion-body {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .accordion-open .accordion-body {
+            max-height: 1000px; /* Adjust as needed */
+        }
+        .accordion-open .chevron-icon {
+            transform: rotate(180deg);
+        }
+        .chevron-icon {
+            transition: transform 0.3s ease;
+        }
+        /* Scrollbar styles for mobile table */
+        .mobile-table-scroll::-webkit-scrollbar {
+            height: 4px;
+        }
+        .mobile-table-scroll::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        .mobile-table-scroll::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 2px;
+        }
+        .mobile-table-scroll::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container mx-auto px-4 py-12 md:py-20">
+        <div class="text-center mb-10">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-gray-800 tracking-tight">The Right Plan for Your Business</h1>
+            <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">Flexible pricing for businesses of all sizes. Choose the plan that fits your needs and budget.</p>
+        </div>
+
+        <div class="flex justify-center items-center mb-10 space-x-4">
+            <span id="monthly-label" class="text-lg font-semibold text-blue-600">Monthly</span>
+            <label for="billing-toggle" class="inline-flex relative items-center cursor-pointer">
+                <input type="checkbox" value="" id="billing-toggle" class="sr-only peer">
+                <div class="w-14 h-8 bg-gray-200 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-1 after:left-[4px] after:bg-white after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-blue-600"></div>
+            </label>
+            <span id="annual-label" class="text-lg font-medium text-gray-500">Annually <span class="text-green-500 font-semibold">(Save 20%)</span></span>
+        </div>
+
+        <div id="pricing-cards-container" class="grid grid-cols-1 lg:grid-cols-4 gap-8 mb-12"></div>
+
+        <div class="text-center mb-12 mt-20">
+             <h2 class="text-3xl md:text-4xl font-extrabold text-gray-800 tracking-tight">Compare Features</h2>
+             <p class="mt-3 text-lg text-gray-600">Find the perfect set of features for your workflow.</p>
+        </div>
+        
+        <div class="max-w-7xl mx-auto">
+            <div class="hidden md:grid md:grid-cols-5 gap-4 sticky top-0 bg-gray-50 z-10 py-4 px-6 rounded-t-lg">
+                <div class="text-lg font-bold text-gray-800 col-span-1">Features</div>
+                <div id="header-plan-1" class="text-lg font-bold text-gray-800 text-center">Basic</div>
+                <div id="header-plan-2" class="text-lg font-bold text-gray-800 text-center">Standard</div>
+                <div id="header-plan-3" class="text-lg font-bold text-gray-800 text-center">Premium</div>
+                <div id="header-plan-4" class="text-lg font-bold text-gray-800 text-center">Enterprise</div>
+            </div>
+            <div id="features-accordion-container" class="space-y-2"></div>
+        </div>
+
+    </div>
+
+    <script>
+        const csvData = `Feature Category,Basic Plan,Standard Plan,Premium Plan,Enterprise Plan
+Pricing,"$X / month per location","$Y / month per location","$Z / month per location",Custom Quote
+,"Billed Annually or Monthly","(Annual Billing Discount)","(Annual Billing Discount)","(Annual Billing Discount)"
+Core Business Management
+CRM & Sales Dashboard,✔️,✔️,✔️,✔️
+Basic Analytics,✔️,✔️,✔️,✔️
+Basic Calendar & Public Profile,✔️,✔️,✔️,✔️
+Customizable Services,Up to 25 Services,Up to 100 Services,Unlimited Services,Unlimited Services
+Manage Staff,Up to 5 Staff,Up to 20 Staff,Unlimited Staff,Unlimited Staff
+Staff Permissions,❌,Basic Permissions,Advanced Permissions,Advanced Permissions
+Consultant Forms Storage,1 GB,10 GB,50 GB,Unlimited
+Client Experience & Booking
+Customer Booking Service,✔️,✔️,✔️,✔️
+Customer Booking Tracker,✔️,✔️,✔️,✔️
+Client Booking Summarizer,❌,✔️,✔️,✔️
+"Explore Services" Page,✔️,✔️,✔️,✔️
+"Shop the Look" Features,❌,Basic,Advanced,Advanced
+Gender-Based Customer Themes,❌,✔️,✔️,✔️
+Marketing & Growth
+"Manage Offers",❌,✔️,✔️,✔️
+Promotional Tier Tools,❌,✔️,✔️,✔️
+Blog Session on Platform,❌,✔️,✔️,✔️
+Sponsored Placements,❌,✔️,✔️,✔️
+Featured Offers (Homepage & Email),❌,❌,✔️,✔️
+Automated Marketing Suite,❌,❌,✔️,✔️
+Advanced Analytics & AI
+Advanced Reporting,❌,❌,✔️,✔️
+AI-Powered Dynamic Pricing,❌,❌,✔️,✔️
+Advanced Client Retention Analytics,❌,❌,❌,✔️
+Conversational AI Advisor,Fee per session,Fee per session,5 Free Sessions/Month,20 Free Sessions/Month
+Data as a Service (DaaS),❌,❌,❌,✔️
+Network & Enterprise
+Multi-Location Management,❌,❌,Add-on Fee,✔️
+Paid API Access,❌,❌,❌,✔️
+Client Aggregators Integration,❌,❌,✔️,✔️
+Franchise HQ Management Tools,❌,❌,❌,✔️
+Support, Training & Maintenance
+Standard Support,✔️,✔️,✔️,✔️
+Priority Support,❌,✔️,✔️,✔️
+Dedicated Account Manager,❌,❌,✔️,✔️
+Onboarding & Training,Basic,Standard,Premium,Custom
+Data Migration Support,❌,Add-on Fee,✔️,✔️`;
+
+        const categoryIcons = {
+            "Core Business Management": `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 8v-4h1v4h-1z" /></svg>`,
+            "Client Experience & Booking": `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>`,
+            "Marketing & Growth": `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" /></svg>`,
+            "Advanced Analytics & AI": `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>`,
+            "Network & Enterprise": `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>`,
+            "Support, Training & Maintenance": `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>`
+        };
+
+        const checkIcon = `<svg class="w-6 h-6 text-green-500 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>`;
+        const crossIcon = `<svg class="w-6 h-6 text-red-400 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>`;
+
+        function parseCSV(data) {
+            const rows = data.trim().split('\n');
+            const headers = rows[0].split(',').slice(1);
+            let features = [];
+            let currentCategory = '';
+
+            rows.slice(1).forEach(row => {
+                const rowData = row.split(',');
+                const featureName = rowData[0].replace(/"/g, '').trim();
+
+                if (featureName && rowData.length === 1) {
+                    currentCategory = featureName;
+                } else if (featureName && rowData.length > 1) {
+                    if (!features.some(c => c.category === currentCategory)) {
+                        features.push({ category: currentCategory, items: [] });
+                    }
+                    const categoryObj = features.find(c => c.category === currentCategory);
+                    categoryObj.items.push({
+                        name: featureName,
+                        plans: rowData.slice(1).map(val => val.replace(/"/g, '').trim())
+                    });
+                }
+            });
+            return { headers, features };
+        }
+
+        function renderContent(data) {
+            const { headers, features } = data;
+            const cardsContainer = document.getElementById('pricing-cards-container');
+            const accordionContainer = document.getElementById('features-accordion-container');
+            
+            cardsContainer.innerHTML = '';
+            accordionContainer.innerHTML = '';
+            
+            // Render Pricing Cards
+            headers.forEach((header, index) => {
+                const pricingRow = features.find(c => c.category === 'Pricing')?.items[0];
+                const price = pricingRow ? pricingRow.plans[index] : '';
+                const monthlyPrice = price.includes(' / ') ? price.split(' / ')[0] : price;
+                const isCustom = monthlyPrice === 'Custom Quote';
+                const isRecommended = header === 'Premium Plan';
+
+                const cardHTML = `
+                    <div class="plan-card bg-white rounded-xl shadow-md p-6 flex flex-col ${isRecommended ? 'border-2 border-blue-500 relative' : 'border border-gray-200'}">
+                        ${isRecommended ? '<div class="absolute top-0 -translate-y-1/2 left-1/2 -translate-x-1/2 px-3 py-1 bg-blue-500 text-white text-sm font-semibold rounded-full">Most Popular</div>' : ''}
+                        <h3 class="text-xl font-bold text-gray-800">${header}</h3>
+                        <div class="mt-4 flex items-baseline">
+                            <span class="text-5xl font-extrabold tracking-tight text-gray-900 monthly-price">${monthlyPrice}</span>
+                            <span class="text-5xl font-extrabold tracking-tight text-gray-900 annual-price hidden">${isCustom ? 'Custom' : 'Discounted'}</span>
+                            <span class="ml-1 text-xl font-medium text-gray-500 monthly-price">${isCustom ? '' : '/mo'}</span>
+                            <span class="ml-1 text-xl font-medium text-gray-500 annual-price hidden">${isCustom ? '' : '/yr'}</span>
+                        </div>
+                        <p class="mt-2 text-sm text-gray-500 annual-price hidden">${!isCustom ? 'Billed annually' : 'Contact us for a quote'}</p>
+                        <p class="mt-4 text-gray-500 flex-grow">${header === 'Basic Plan' ? 'For individuals and small teams.' : header === 'Standard Plan' ? 'For growing businesses.' : header === 'Premium Plan' ? 'For established businesses.' : 'For large-scale enterprises.'}</p>
+                        <button class="w-full mt-6 py-3 px-6 text-lg font-semibold rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2 ${isRecommended ? 'bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500' : 'bg-white text-blue-600 border border-gray-300 hover:bg-gray-50 focus:ring-gray-400'}">
+                            ${isCustom ? 'Contact Us' : 'Choose Plan'}
+                        </button>
+                    </div>
+                `;
+                cardsContainer.innerHTML += cardHTML;
+            });
+            
+            // Render Features Accordion
+            features.forEach(categoryObj => {
+                if (categoryObj.category === 'Pricing' || categoryObj.category === '') return;
+                
+                let featuresHTML = '';
+                categoryObj.items.forEach(item => {
+                    featuresHTML += `
+                        <div class="grid grid-cols-2 md:grid-cols-5 gap-4 py-4 px-2 md:px-0 border-t border-gray-200">
+                            <div class="col-span-2 md:col-span-1 text-sm font-medium text-gray-600">${item.name}</div>
+                            ${item.plans.map(planValue => {
+                                let displayValue = '';
+                                if (planValue === '✔️') displayValue = checkIcon;
+                                else if (planValue === '❌') displayValue = crossIcon;
+                                else displayValue = `<span class="text-sm text-gray-800 font-semibold text-center block">${planValue}</span>`;
+                                return `<div class="text-center">${displayValue}</div>`;
+                            }).join('')}
+                        </div>
+                    `;
+                });
+
+                const accordionItemHTML = `
+                    <div class="accordion-item bg-white border border-gray-200 rounded-lg">
+                        <div class="accordion-header flex justify-between items-center p-4">
+                            <div class="flex items-center">
+                                ${categoryIcons[categoryObj.category] || ''}
+                                <span class="text-lg font-bold text-gray-800">${categoryObj.category}</span>
+                            </div>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 chevron-icon text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                        </div>
+                        <div class="accordion-body px-4">
+                            <div class="grid grid-cols-5 gap-4 md:hidden sticky top-0 bg-gray-100 z-10 py-2 rounded-t-md text-center font-bold text-xs text-gray-600">
+                                <div>Feature</div>
+                                <div>Basic</div>
+                                <div>Standard</div>
+                                <div>Premium</div>
+                                <div>Enterprise</div>
+                            </div>
+                            <div class="md:hidden mobile-table-scroll overflow-x-auto pb-2">${featuresHTML.replaceAll('grid-cols-2', 'grid-cols-5')}</div>
+                            <div class="hidden md:block">${featuresHTML}</div>
+                        </div>
+                    </div>
+                `;
+                accordionContainer.innerHTML += accordionItemHTML;
+            });
+
+             // Add accordion functionality
+            document.querySelectorAll('.accordion-header').forEach(header => {
+                header.addEventListener('click', () => {
+                    const accordionItem = header.parentElement;
+                    accordionItem.classList.toggle('accordion-open');
+                });
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const parsedData = parseCSV(csvData);
+            renderContent(parsedData);
+
+            const toggle = document.getElementById('billing-toggle');
+            const monthlyLabel = document.getElementById('monthly-label');
+            const annualLabel = document.getElementById('annual-label');
+
+            toggle.addEventListener('change', () => {
+                document.querySelectorAll('.monthly-price').forEach(el => el.classList.toggle('hidden'));
+                document.querySelectorAll('.annual-price').forEach(el => el.classList.toggle('hidden'));
+                if (toggle.checked) { // Annual
+                    monthlyLabel.classList.remove('text-blue-600', 'font-semibold');
+                    monthlyLabel.classList.add('text-gray-500', 'font-medium');
+                    annualLabel.classList.add('text-blue-600', 'font-semibold');
+                    annualLabel.classList.remove('text-gray-500', 'font-medium');
+                } else { // Monthly
+                    annualLabel.classList.remove('text-blue-600', 'font-semibold');
+                    annualLabel.classList.add('text-gray-500', 'font-medium');
+                    monthlyLabel.classList.add('text-blue-600', 'font-semibold');
+                    monthlyLabel.classList.remove('text-gray-500', 'font-medium');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
