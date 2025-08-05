@@ -31,7 +31,7 @@
             transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .accordion-open .accordion-body {
-            max-height: 1000px; /* Adjust as needed */
+            max-height: 1500px; /* Increased for more features */
         }
         .accordion-open .chevron-icon {
             transform: rotate(180deg);
@@ -91,45 +91,54 @@
     <script>
         const csvData = `Feature Category,Basic Plan,Standard Plan,Premium Plan,Enterprise Plan
 Pricing,"$X / month per location","$Y / month per location","$Z / month per location",Custom Quote
-,"Billed Annually or Monthly","(Annual Billing Discount)","(Annual Billing Discount)","(Annual Billing Discount)"
 Core Business Management
 CRM & Sales Dashboard,✔️,✔️,✔️,✔️
 Basic Analytics,✔️,✔️,✔️,✔️
 Basic Calendar & Public Profile,✔️,✔️,✔️,✔️
+Calendar View of Customers,✔️,✔️,✔️,✔️
 Customizable Services,Up to 25 Services,Up to 100 Services,Unlimited Services,Unlimited Services
 Manage Staff,Up to 5 Staff,Up to 20 Staff,Unlimited Staff,Unlimited Staff
 Staff Permissions,❌,Basic Permissions,Advanced Permissions,Advanced Permissions
+Profile Updates (Business & Customer),✔️,✔️,✔️,✔️
 Consultant Forms Storage,1 GB,10 GB,50 GB,Unlimited
 Client Experience & Booking
 Customer Booking Service,✔️,✔️,✔️,✔️
 Customer Booking Tracker,✔️,✔️,✔️,✔️
+Customer Offers Viewer,✔️,✔️,✔️,✔️
 Client Booking Summarizer,❌,✔️,✔️,✔️
-"Explore Services" Page,✔️,✔️,✔️,✔️
-"Shop the Look" Features,❌,Basic,Advanced,Advanced
+"Explore Services" Page (Optimized Search),✔️,✔️,✔️,✔️
+"Shop the Look" Features (Bulk Products),❌,Basic,Advanced,Advanced
 Gender-Based Customer Themes,❌,✔️,✔️,✔️
 Marketing & Growth
-"Manage Offers",❌,✔️,✔️,✔️
+Manage Offers (Add, Edit, Delete),❌,✔️,✔️,✔️
 Promotional Tier Tools,❌,✔️,✔️,✔️
 Blog Session on Platform,❌,✔️,✔️,✔️
-Sponsored Placements,❌,✔️,✔️,✔️
+Sponsored Placements (Top of Search),❌,✔️,✔️,✔️
 Featured Offers (Homepage & Email),❌,❌,✔️,✔️
-Automated Marketing Suite,❌,❌,✔️,✔️
+Automated Marketing Suite (Email/SMS),❌,❌,✔️,✔️
+Advanced Advertising & Promotions,❌,❌,✔️,✔️
 Advanced Analytics & AI
 Advanced Reporting,❌,❌,✔️,✔️
 AI-Powered Dynamic Pricing,❌,❌,✔️,✔️
 Advanced Client Retention Analytics,❌,❌,❌,✔️
-Conversational AI Advisor,Fee per session,Fee per session,5 Free Sessions/Month,20 Free Sessions/Month
+Conversational AI Advisor Session,Fee per session,Fee per session,5 Free Sessions/Month,20 Free Sessions/Month
 Data as a Service (DaaS),❌,❌,❌,✔️
-Network & Enterprise
-Multi-Location Management,❌,❌,Add-on Fee,✔️
-Paid API Access,❌,❌,❌,✔️
-Client Aggregators Integration,❌,❌,✔️,✔️
+Network & Enterprise Features
+Independent Network Deployment Plan,❌,❌,❌,✔️
+Centralised Network Deployment Plan,❌,❌,❌,✔️
 Franchise HQ Management Tools,❌,❌,❌,✔️
+Multi-Location Management,❌,❌,Add-on Fee,✔️
+Paid API Access,❌,❌,❌,✔️ (Call limits apply)
+Client Aggregators Integration,❌,❌,✔️,✔️
+Verification & Revenue Share
+"JoinBeauty Verified" Badge,Fee,Fee,Included,Included
+Eco-Friendly Certification,Fee,Fee,Included,Included
+Professional Certifications (MUA, etc.),Fee,Fee,Fee,Included
+B2B Supply Marketplace Commission,Standard Rate,Standard Rate,Reduced Rate,Preferred Rate
 Support, Training & Maintenance
-Standard Support,✔️,✔️,✔️,✔️
-Priority Support,❌,✔️,✔️,✔️
-Dedicated Account Manager,❌,❌,✔️,✔️
-Onboarding & Training,Basic,Standard,Premium,Custom
+FAQ, Contact Us,✔️,✔️,✔️,✔️
+Customer & Partner Support,Email Support (24hr response),Priority Email Support (12hr response),24/7 Email & Chat Support,Dedicated Account Manager & 24/7 Support
+Training for Business Partners,Onboarding Only,Onboarding Only,Biannual Training,Quarterly Training
 Data Migration Support,❌,Add-on Fee,✔️,✔️`;
 
         const categoryIcons = {
@@ -137,7 +146,8 @@ Data Migration Support,❌,Add-on Fee,✔️,✔️`;
             "Client Experience & Booking": `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>`,
             "Marketing & Growth": `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" /></svg>`,
             "Advanced Analytics & AI": `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>`,
-            "Network & Enterprise": `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>`,
+            "Network & Enterprise Features": `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>`,
+            "Verification & Revenue Share": `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 20.944A12.02 12.02 0 0012 21a12.02 12.02 0 009-8.056z" /></svg>`,
             "Support, Training & Maintenance": `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-3 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>`
         };
 
@@ -154,10 +164,8 @@ Data Migration Support,❌,Add-on Fee,✔️,✔️`;
                 const rowData = row.split(',');
                 const featureName = rowData[0].replace(/"/g, '').trim();
 
-                if (featureName && rowData.length === 1) {
-                    currentCategory = featureName;
-                } else if (featureName && rowData.length > 1) {
-                    if (!features.some(c => c.category === currentCategory)) {
+                if (featureName && rowData.length > 1) {
+                     if (!features.some(c => c.category === currentCategory)) {
                         features.push({ category: currentCategory, items: [] });
                     }
                     const categoryObj = features.find(c => c.category === currentCategory);
@@ -165,6 +173,8 @@ Data Migration Support,❌,Add-on Fee,✔️,✔️`;
                         name: featureName,
                         plans: rowData.slice(1).map(val => val.replace(/"/g, '').trim())
                     });
+                } else if (featureName) {
+                    currentCategory = featureName;
                 }
             });
             return { headers, features };
