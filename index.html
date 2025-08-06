@@ -59,13 +59,11 @@
 <body>
 
     <div class="container mx-auto px-4 py-12 md:py-20">
-        <!-- HEADER -->
         <div class="text-center mb-10">
             <h1 class="text-4xl md:text-5xl font-extrabold text-gray-800 tracking-tight">The Right Plan for Your Business</h1>
             <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">Flexible pricing for businesses of all sizes. Choose the plan that fits your needs and budget.</p>
         </div>
 
-        <!-- BILLING TOGGLE -->
         <div class="flex justify-center items-center mb-10 space-x-4">
             <span id="monthly-label" class="text-lg font-semibold text-blue-600">Monthly</span>
             <label for="billing-toggle" class="inline-flex relative items-center cursor-pointer">
@@ -75,10 +73,8 @@
             <span id="annual-label" class="text-lg font-medium text-gray-500">Annually <span class="text-green-500 font-semibold">(Save 20%)</span></span>
         </div>
 
-        <!-- PRICING CARDS -->
         <div id="pricing-cards-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12"></div>
 
-        <!-- FEATURES COMPARISON -->
         <div class="text-center mb-12 mt-20">
              <h2 class="text-3xl md:text-4xl font-extrabold text-gray-800 tracking-tight">Compare Features</h2>
              <p class="mt-3 text-lg text-gray-600">Find the perfect set of features for your workflow.</p>
@@ -217,10 +213,13 @@ Data Migration Support,❌,Add-on Fee,✔️,✔️`;
             });
             
             // Render Features Comparison Table
-            let tableHeaderHTML = `<div class="grid grid-cols-5 gap-4 py-4 px-6 bg-slate-100 rounded-t-lg sticky top-0 z-10">`;
-            tableHeaderHTML += `<div class="col-span-2 lg:col-span-1 text-left text-sm font-bold text-gray-700 uppercase tracking-wider">Features</div>`;
+            // FIX: Changed to a 6-column grid to allow the first column to be wider without breaking the layout.
+            let tableHeaderHTML = `<div class="grid grid-cols-6 gap-4 py-4 px-6 bg-slate-100 rounded-t-lg sticky top-0 z-10">`;
+            // FIX: First column spans 2 grid columns. Removed responsive variants.
+            tableHeaderHTML += `<div class="col-span-2 text-left text-sm font-bold text-gray-700 uppercase tracking-wider">Features</div>`;
             headers.forEach(header => {
-                tableHeaderHTML += `<div class="hidden lg:block text-center text-sm font-bold text-gray-700 uppercase tracking-wider">${header}</div>`;
+                // FIX: Removed 'hidden lg:block' to ensure headers are always visible with their data.
+                tableHeaderHTML += `<div class="text-center text-sm font-bold text-gray-700 uppercase tracking-wider">${header}</div>`;
             });
             tableHeaderHTML += `</div>`;
 
@@ -231,14 +230,17 @@ Data Migration Support,❌,Add-on Fee,✔️,✔️`;
                 
                 let featuresRowsHTML = '';
                 categoryObj.items.forEach(item => {
-                    featuresRowsHTML += `<div class="grid grid-cols-5 gap-4 items-center">`;
-                    featuresRowsHTML += `<div class="col-span-5 sm:col-span-2 lg:col-span-1 py-3 text-sm font-medium text-gray-600">${item.name}</div>`;
+                    // FIX: Changed to a 6-column grid to match the header.
+                    featuresRowsHTML += `<div class="grid grid-cols-6 gap-4 items-center">`;
+                    // FIX: The feature name spans 2 columns. Removed complex/broken responsive spans.
+                    featuresRowsHTML += `<div class="col-span-2 py-3 text-sm font-medium text-gray-600">${item.name}</div>`;
                     
                     item.plans.forEach(planValue => {
                         let displayValue = '';
                         if (planValue === '✔️') displayValue = checkIcon;
                         else if (planValue === '❌') displayValue = crossIcon;
                         else displayValue = `<span class="text-sm text-gray-800 font-semibold text-center block">${planValue}</span>`;
+                        // Each plan value implicitly takes up 1 column.
                         featuresRowsHTML += `<div class="text-center py-3">${displayValue}</div>`;
                     });
                     featuresRowsHTML += `</div>`;
